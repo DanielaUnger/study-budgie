@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="main">
+    <form action="/" method="post" class="study_form">
+    <table>
+        <tr>
+            <td>
+                Study time:
+            </td>
+            <td>
+                <input autocomplete="off" autofocus name="study" value="{{ defaults.study }}" type="number" required min="1" max="180">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Short break:
+            </td>
+            <td>
+                <input autocomplete="off" id="short_break" name="short_break" value="{{ defaults.short_break }}" type="number" required min="1" max="180">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Long break:
+            </td>
+            <td>
+                <input autocomplete="off" id="long_break" name="long_break" value="{{ defaults.long_break }}" type="number" required min="1" max="180">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Pomodoro sessions per interval:
+            </td>
+            <td>
+                <input autocomplete="off" id="pomocount" name="pomocount" value="{{ defaults.pomocount }}" type="number" required min="1" max="180">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Auto start breaks:
+            </td>
+            <td>
+                <input id="autobreak" name="autobreak" type="checkbox" {% if defaults.autobreak %}checked{% endif %}>
+            </td>
+        </tr>
+        <tr>
+            <td>Auto start study session:</td>
+            <td>
+                <input id="autostudy" name="autostudy" type="checkbox" {% if defaults.autostudy %}checked{% endif %}>
+            </td>
+        </tr>
+        <tr><td></td></tr>
+        <tr>
+            <td>
+                <p><button type="submit">Save</button></p>
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+{% endblock %}
