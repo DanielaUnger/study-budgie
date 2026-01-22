@@ -1,7 +1,6 @@
 # Study Budgie
 #### Description:
-**Study Budgie** is a Pomodoro timer web application built with **JavaScript**, **Python (Flask)**, **HTML**, and **CSS**. The goal of the project was to create a functional and customizable productivity tool while also focusing on clean state-based logic and a friendly, approachable user experience.
-The app features a cute budgie mascot, which I designed myself in **Adobe Illustrator**. The budgie animates differently depending on the current Pomodoro state (idle, studying, on break, or finished), making the experience more engaging and visually clear.
+**Study Budgie** is a Pomodoro timer web application built with **JavaScript**, **Python (Flask)**, **HTML**, and **CSS**. The app features a cute budgie mascot, which I designed myself in **Adobe Illustrator**. The budgie animates differently depending on the current Pomodoro state (idle, studying, on break, or finished).
 
 This project uses a development secret key for session handling (see `app.py`). In a production environment, this would be provided via environment variables.
 
@@ -41,7 +40,6 @@ Each state:
 Pausing is **not** handled as a separate state. Instead, the Start button toggles between starting and pausing the interval when pressed during an active session.
 
 The countdown itself is driven by a JavaScript interval that decreases the remaining time every second. When the timer reaches zero, an alarm sound is played and the app transitions automatically to the next state (either break or idle, depending on context).
-Special care was taken to avoid multiple overlapping intervals, which is a common issue in timer-based applications. All intervals are centrally managed using helper functions that ensure the timer is always in a consistent state.
 
 ### Python (Flask): `app.py`
 This file handles routing, form processing, and persistence of user settings.
@@ -64,13 +62,13 @@ The `/index` route renders the main Pomodoro interface (`index.html`). It retrie
 
 ### CSS: `pomo_style.css`
 This file is responsible for all styling and animations.
-The page layout uses a **column-based Flexbox structure** to keep the design clean, simple, and responsive. It styles:
+The page layout uses a **column-based Flexbox structure**. It styles:
 * The header and navigation bar
 * The timer display
 * Buttons and hover states
 * The settings form
 
-The pet animation is implemented entirely in CSS using a **single SVG sprite sheet**. Each Pomodoro state has its own animation defined through keyframes that alternate between two frames. A `.paused` class is used to pause the animation when the timer is paused, ensuring visual feedback matches the timer’s behavior.
+The pet animation is implemented entirely in CSS using a **single SVG sprite sheet**. Each Pomodoro state has its own animation defined through keyframes that alternate between two frames. A `.paused` class is used to pause the animation when the timer is paused.
 
 ### HTML: `layout.html`, `index.html`, `start.html`
 * `layout.html` contains shared markup such as:
