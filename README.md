@@ -11,12 +11,14 @@ Users can customize all important Pomodoro settings, including:
 * Number of Pomodoro sessions before a long break
 * Whether study sessions should start automatically
 * Whether breaks should start automatically
+
 These settings are saved using a **Flask session (stored in a cookie)**, so users do not need to re-enter their preferences each time they return to the app.
 
 The timer itself includes:
 * A **Start / Pause / Resume** button to control the countdown
 * A **Stop** button to end the current Pomodoro cycle and move to the finished state
 * An audible notification when a session or break ends
+
 If automatic study or breaks are disabled, the user must manually start the timer after each state change, giving full control over pacing.
 
 The application is split into several files, each responsible for a specific part of the functionality.
@@ -28,6 +30,7 @@ When the page loads, `script.js` retrieves the user’s Pomodoro settings from t
 * Start and Stop buttons
 * The timer display
 * The pet animation container
+
 Event listeners are attached to the buttons, which trigger the `startTimer` and `stopTimer` functions.
 
 The timer logic is implemented using a **state-based approach**. The app switches between the following states: `idle`, `study`, `break`, `finished`
@@ -37,6 +40,7 @@ Each state:
 * Starts or stops the countdown interval
 * Updates button text
 * Switches the pet animation by applying CSS classes
+
 Pausing is **not** handled as a separate state. Instead, the Start button toggles between starting and pausing the interval when pressed during an active session.
 
 The countdown itself is driven by a JavaScript interval that decreases the remaining time every second. When the timer reaches zero, an alarm sound is played and the app transitions automatically to the next state (either break or idle, depending on context).
