@@ -4,10 +4,7 @@ from flask import Flask, redirect, render_template, request, session
 
 # Configure application and assign secret key for session
 app = Flask(__name__)
-app.secret_key = os.environ.get(
-    "SECRET_KEY",
-    "dev-secret-key"
-)
+app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-key")
 
 # default study settings
 DEFAULTS = {
@@ -16,8 +13,9 @@ DEFAULTS = {
     "long_break": 20,
     "pomocount": 4,
     "autobreak": False,
-    "autostudy": False
+    "autostudy": False,
 }
+
 
 @app.route("/", methods=["GET", "POST"])
 def start():
@@ -28,8 +26,8 @@ def start():
         short_break = request.form.get("short_break", "").strip()
         long_break = request.form.get("long_break", "").strip()
         pomocount = request.form.get("pomocount", "").strip()
-        autobreak = (request.form.get("autobreak") == "on")
-        autostudy = (request.form.get("autostudy") == "on")
+        autobreak = request.form.get("autobreak") == "on"
+        autostudy = request.form.get("autostudy") == "on"
 
         # converting strings to int
         try:
@@ -39,12 +37,21 @@ def start():
             pomocount = int(pomocount)
         except ValueError:
             # if invalid number, re-render form with an error
-            return render_template("start.html", defaults=DEFAULTS, error="Please enter whole numbers.")
-        
+            return render_template(
+                "start.html", defaults=DEFAULTS, error="Please enter whole numbers."
+            )
+
         # range checks
-        if not (1 <= study <= 180 and 1 <= short_break <= 180 and 1 <= long_break <= 180 and 1 <= pomocount <= 180):
-            return render_template("start.html", defaults=DEFAULTS, error="Values out of range (1-180).")
-        
+        if not (
+            1 <= study <= 180
+            and 1 <= short_break <= 180
+            and 1 <= long_break <= 180
+            and 1 <= pomocount <= 180
+        ):
+            return render_template(
+                "start.html", defaults=DEFAULTS, error="Values out of range (1-180)."
+            )
+
         # store values in session
         session["pomo_settings"] = {
             "study": study,
@@ -52,16 +59,16 @@ def start():
             "long_break": long_break,
             "pomocount": pomocount,
             "autobreak": autobreak,
-            "autostudy": autostudy
+            "autostudy": autostudy,
         }
 
         return redirect("/index")
-    
+
     # GET: show form and pre-fill it with session values if they exist
     else:
         saved = session.get("pomo_settings", DEFAULTS)
         return render_template("start.html", defaults=saved)
-    
+
 
 @app.route("/index")
 def index():
