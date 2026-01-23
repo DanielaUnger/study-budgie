@@ -1,7 +1,7 @@
 # Study Budgie
 ![Animation of Pomodoro countdown in action featuring a stylized illustration of a budgie](/static/img/budgie_450.gif)
 #### Description:
-Study Budgie is a Pomodoro timer web application built with JavaScript**, **Python (Flask), HTML, and CSS. The app features a cute budgie mascot, which I designed myself in Adobe Illustrator. The budgie animates differently depending on the current Pomodoro state (idle, studying, break, or finished).
+Study Budgie is a Pomodoro timer web application built with JavaScript, Python (Flask), HTML, and CSS. The app features a cute budgie mascot, which I designed myself in Adobe Illustrator. The budgie animates differently depending on the current Pomodoro state (idle, studying, break, or finished).
 
 Users can customize all important Pomodoro settings, including:
 * Study session length (in minutes)
