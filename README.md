@@ -1,22 +1,20 @@
 # Study Budgie
 #### Description:
-**Study Budgie** is a Pomodoro timer web application built with **JavaScript**, **Python (Flask)**, **HTML**, and **CSS**. The app features a cute budgie mascot, which I designed myself in **Adobe Illustrator**. The budgie animates differently depending on the current Pomodoro state (idle, studying, on break, or finished).
-
-This project uses a development secret key for session handling (see `app.py`). In a production environment, this would be provided via environment variables.
+Study Budgie is a Pomodoro timer web application built with JavaScript**, **Python (Flask), HTML, and CSS. The app features a cute budgie mascot, which I designed myself in Adobe Illustrator. The budgie animates differently depending on the current Pomodoro state (idle, studying, break, or finished).
 
 Users can customize all important Pomodoro settings, including:
 * Study session length (in minutes)
 * Short break length
 * Long break length
 * Number of Pomodoro sessions before a long break
-* Whether study sessions should start automatically
-* Whether breaks should start automatically
+* Auto start study sessions
+* Auto start breaks
 
-These settings are saved using a **Flask session (stored in a cookie)**, so users do not need to re-enter their preferences each time they return to the app.
+These settings are saved using a Flask session (stored in a cookie), so users do not need to re-enter their preferences each time they return to the app. The app uses a **secret key for session handling (see `app.py`)**. In a production environment, this would be provided via environment variables.
 
 The timer itself includes:
-* A **Start / Pause / Resume** button to control the countdown
-* A **Stop** button to end the current Pomodoro cycle and move to the finished state
+* A Start / Pause / Resume button to control the countdown
+* A Stop button to end the current Pomodoro cycle and move to the finished state
 * An audible notification when a session or break ends
 
 If automatic study or breaks are disabled, the user must manually start the timer after each state change, giving full control over pacing.
@@ -26,14 +24,12 @@ The application is split into several files, each responsible for a specific par
 ### JavaScript: `script.js`
 This file contains all timer logic and state management for the Pomodoro system.
 
-When the page loads, `script.js` retrieves the user’s Pomodoro settings from the HTML (embedded as JSON using Jinja) and stores references to key DOM elements such as:
-* Start and Stop buttons
-* The timer display
-* The pet animation container
+When the page loads, `script.js` retrieves the user’s Pomodoro settings from the HTML (embedded as JSON using Jinja) and stores references to key DOM elements (buttons, timer, pet animation).
 
 Event listeners are attached to the buttons, which trigger the `startTimer` and `stopTimer` functions.
 
 The timer logic is implemented using a **state-based approach**. The app switches between the following states: `idle`, `study`, `break`, `finished`
+
 Each state:
 * Sets the appropriate countdown duration
 * Updates the timer display
@@ -47,6 +43,7 @@ The countdown itself is driven by a JavaScript interval that decreases the remai
 
 ### Python (Flask): `app.py`
 This file handles routing, form processing, and persistence of user settings.
+
 The application uses Flask sessions to store Pomodoro preferences. Default values are defined for:
 * Study duration
 * Short break duration
@@ -57,29 +54,30 @@ The application uses Flask sessions to store Pomodoro preferences. Default value
 The `/` route serves as the **start page** (`start.html`), which contains a form where users can configure their Pomodoro settings. When the page is loaded via GET, previously saved settings (or defaults) are used to pre-fill the form fields.
 
 When the form is submitted via POST:
-* Input values are retrieved and validated
-* Values are converted to integers or booleans as appropriate
-* The settings are saved in the user’s session
+* Input values are retrieved, validated and converted appropriately
+* The settings are saved in the user session
 * The user is redirected to the main timer page
 
-The `/index` route renders the main Pomodoro interface (`index.html`). It retrieves the saved settings from the session and passes them to the template so they can be used by JavaScript.
+The `/index` route renders the **main Pomodoro interface** (`index.html`). It retrieves the saved settings from the session and passes them to the template so they can be used by JavaScript.
 
 ### CSS: `pomo_style.css`
 This file is responsible for all styling and animations.
-The page layout uses a **column-based Flexbox structure**. It styles:
+
+The page layout uses a column-based Flexbox structure. It styles:
 * The header and navigation bar
 * The timer display
 * Buttons and hover states
 * The settings form
 
-The pet animation is implemented entirely in CSS using a **single SVG sprite sheet**. Each Pomodoro state has its own animation defined through keyframes that alternate between two frames. A `.paused` class is used to pause the animation when the timer is paused.
+The **pet animation** is implemented entirely in CSS using a single SVG sprite sheet. Each Pomodoro state has its own animation defined through keyframes that alternate between two frames. A `.paused` class is used to pause the animation when the timer is paused.
 
 ### HTML: `layout.html`, `index.html`, `start.html`
 * `layout.html` contains shared markup such as:
   * The page header
   * Navigation bar
   * CSS and font imports
-    It uses **Jinja blocks** so that other pages can inject their own content without repeating code.
+
+It uses **Jinja blocks** so that other pages can inject their own content without repeating code.
 
 * `index.html` is the main Pomodoro interface. It contains the timer display, pet animation container, and control buttons. The JavaScript file is loaded on this page.
 
