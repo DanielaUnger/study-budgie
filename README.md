@@ -23,8 +23,6 @@ Study Budgie is a Pomodoro timer web application featuring a cute animated budgi
 
 ## Setup
 
-*Note: This code is shared for demonstration purposes.*
-
 ```bash
 pip install -r requirements.txt
 flask run
@@ -134,4 +132,4 @@ It uses **Jinja blocks** so that other pages can inject their own content withou
 
 ## Copyright
 
-© 2025 Daniela Unger. All rights reserved.
+© 2026 Daniela Unger. All rights reserved.
