@@ -19,7 +19,6 @@ Study Budgie is a Pomodoro timer web application featuring a cute animated budgi
 
 - **Frontend**: JavaScript, HTML5, CSS3
 - **Backend**: Flask (Python)
-- **Design**: Adobe Illustrator (custom artwork)
 
 ## Setup
 
@@ -28,7 +27,7 @@ pip install -r requirements.txt
 flask run
 ```
 
-Navigate to `http://localhost:5000`
+Navigate to `http://127.0.0.1:5000`
 
 ## Pomodoro Settings
 
