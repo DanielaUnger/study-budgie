@@ -1,3 +1,10 @@
+// TODO: Check runtime state in localStorage
+  // if yes:
+    // validate (valic phase? time non-negative?)
+      // reset if invalid
+    //  restore timer state by resuming automatically
+  // else, intitialize fresh session
+
 // Get pomodoro settings from user form
 const SETTINGS = JSON.parse(document.getElementById("settings").textContent);
 
@@ -107,6 +114,7 @@ function setState(newState) {
 
   // update Timer display
   updateDisplay();
+  // TODO: update runtime state to state = x
 }
 
 function updatePetAnimation(state) {
@@ -124,6 +132,7 @@ function startTimer() {
   // if Pomodoro Timer not yet running
   if (!isRunning) {
     startInterval();
+    // TODO: update runtime state to running = y
   }
 
   // if Pomodoro Timer running -> Pause
@@ -131,6 +140,7 @@ function startTimer() {
     stopInterval();
     StartButton.textContent = "Resume";
     pet.classList.add("paused");
+    // TODO: update runtime state to running = n
   }
 }
 
@@ -139,6 +149,7 @@ function stopTimer() {
   // Pressed when finished -> set to idle
   if (currentState === STATES.FINISHED) {
     setState(STATES.IDLE);
+    // TODO: clear runtime state
   }
 
   // Pressed when studying -> set to finished
@@ -167,6 +178,7 @@ function updateTimer() {
   }
   // Update Countdown in HTML page
   updateDisplay();
+  // TODO: update stored runtime state to seconds = x
 }
 
 // seperate Timer finished function
@@ -201,4 +213,4 @@ function updateDisplay() {
 setState(STATES.IDLE);
 
 // clear timer on page unload
-window.addEventListener("beforeunload", stopInterval);
+window.addEventListener("beforeunload", stopInterval); // TODO: before stopInterval, persist final timer state
