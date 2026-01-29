@@ -1,19 +1,14 @@
-// TODO: Check runtime state in localStorage
-  // if yes:
-    // validate (valic phase? time non-negative?)
-      // reset if invalid
-    //  restore timer state by resuming automatically
-  // else, intitialize fresh session
-
 // Get pomodoro settings from user form
 const SETTINGS = JSON.parse(document.getElementById("settings").textContent);
+
+// TODO: set runtimeState object in localStorage as JSON (with state, is Running, secondsleft, pomoCount, savedat)
 
 // declare variables
 let timer = null;
 let isRunning = false;
-let minutes = SETTINGS.study;
-let seconds = 0;
-let pomoCount = 0;
+let minutes = SETTINGS.study; // TODO: change to state from runtime
+let seconds = 0; // TODO: change to state from runtime
+let pomoCount = 0; // TO DO change to state from runtime (only declare vars here and move setting values to bottom)
 const audio = new Audio("static/sounds/schoolbell.mp3");
 
 // grab DOM elements
@@ -40,7 +35,7 @@ const STATES = {
   FINISHED: "finished",
 };
 
-let currentState = STATES.IDLE;
+let currentState = STATES.IDLE; // TODO: change to state from runtime
 
 // start or stop timer without changing state or clicking buttons
 function startInterval() {
@@ -178,7 +173,7 @@ function updateTimer() {
   }
   // Update Countdown in HTML page
   updateDisplay();
-  // TODO: update stored runtime state to seconds = x
+  // TODO: update stored runtime state every 10 seconds to seconds = x
 }
 
 // seperate Timer finished function
@@ -210,7 +205,17 @@ function updateDisplay() {
   Countdown.textContent = formatTime(minutes, seconds);
 }
 
+// TODO: INIT FUNCTION:
+// set variables
+// Check runtime state in localStorage (try - else with setState below)
+  // if yes:
+    // validate (valid state? time >= 0 and <?= ???? pomCount >= 0 and <= ?????, isRunning = bool)
+      // reset if invalid
+    //  restore timer state:
+      // set currentState -> update pet, remaining seconds = vars -> updateTimer set pomoCount if paused/running: change Button and Pet
+  // else, intitialize fresh session
+
 setState(STATES.IDLE);
 
 // clear timer on page unload
-window.addEventListener("beforeunload", stopInterval); // TODO: before stopInterval, persist final timer state
+window.addEventListener("beforeunload", stopInterval); // TODO: before stopInterval, persist final timer state and savedAt for timestamp and elapsed-time logic
