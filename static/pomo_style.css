@@ -103,8 +103,7 @@ body {
 .buttons {
   display: flex;
   justify-content: space-between;
-  width: auto;
-  gap: 60px;
+  width: 260px;
 }
 
 button {
@@ -114,7 +113,7 @@ button {
   padding: 15px;
   width: auto;
   font-family: "Roboto", sans-serif;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
   color: #a67c52;
   text-align: center;
@@ -122,16 +121,11 @@ button {
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-shadow: 0 5px rgba(0, 0, 0, 0.25);
 }
 
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 @keyframes two-frame {
