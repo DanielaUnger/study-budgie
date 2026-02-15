@@ -121,11 +121,11 @@ button {
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 4px rgba(166, 124, 82, 0.6);
+  box-shadow: 0 5px rgba(166, 124, 82, 0.7);
 }
 
 button:hover {
-  transform: translateY(-2px);
+  transform: translateY(2px);
 }
 
 @keyframes two-frame {
