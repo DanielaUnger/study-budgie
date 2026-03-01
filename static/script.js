@@ -1,14 +1,14 @@
 // Get pomodoro settings from user form
 const SETTINGS = JSON.parse(document.getElementById("settings").textContent);
 
-// TODO: set runtimeState object in localStorage as JSON (with state, is Running, secondsleft, pomoCount, savedat)
-
 // declare variables
 let timer = null;
 let isRunning = false;
-let minutes = SETTINGS.study; // TODO: change to state from runtime
-let seconds = 0; // TODO: change to state from runtime
-let pomoCount = 0; // TODO change to state from runtime (only declare vars here and move setting values to bottom)
+let longBreak = false;
+let minutes;
+let seconds;
+let pomoCount;
+let currentState;
 const audio = new Audio("static/sounds/schoolbell.mp3");
 
 // grab DOM elements
@@ -37,7 +37,222 @@ const STATES = {
   FINISHED: "finished",
 };
 
-let currentState = STATES.IDLE; // TODO: change to state from runtime
+// local Storage functions to save, load and clear Runtime
+const STORAGE_KEY = "pomoRuntime";
+
+function saveRuntime() {
+  // validate state
+  if (
+    !Object.values(STATES).includes(currentState) ||
+    !Number.isFinite(minutes) ||
+    !Number.isFinite(seconds) ||
+    !Number.isFinite(pomoCount)
+  ) {
+    return;
+  }
+
+  const runtime = {
+    state: currentState,
+    minutes: minutes,
+    seconds: seconds,
+    pomoCount: pomoCount,
+    isRunning: isRunning,
+    longBreak: longBreak,
+    savedAt: Date.now(),
+    settings: SETTINGS,
+  };
+
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(runtime));
+  } catch {
+    return;
+  }
+}
+
+function loadRuntime() {
+  let raw;
+
+  // validation
+  try {
+    raw = localStorage.getItem(STORAGE_KEY);
+  } catch {
+    return null;
+  }
+
+  if (!raw) return null;
+
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+function clearRuntime() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    return;
+  }
+}
+
+// validate Runtime function
+function isValidRuntime(runtime) {
+  if (!runtime || typeof runtime !== "object") {
+    return false;
+  }
+
+  if (!Object.values(STATES).includes(runtime.state)) {
+    return false;
+  }
+
+  if (
+    !Number.isInteger(runtime.minutes) ||
+    !Number.isInteger(runtime.seconds) ||
+    !Number.isInteger(runtime.pomoCount)
+  ) {
+    return false;
+  }
+
+  if (runtime.minutes < 0 || runtime.seconds < 0 || runtime.seconds > 59) {
+    return false;
+  }
+
+  if (runtime.pomoCount < 0 || runtime.pomoCount > SETTINGS.pomocount) {
+    return false;
+  }
+
+  if (typeof runtime.isRunning !== "boolean") {
+    return false;
+  }
+
+  if (typeof runtime.longBreak !== "boolean") {
+    return false;
+  }
+
+  if (!Number.isFinite(runtime.savedAt)) {
+    return false;
+  }
+
+  return true;
+}
+
+// apply Elapsed Time to runtime
+function applyElapsedTime(elapsedSeconds) {
+  let totalSeconds = minutes * 60 + seconds;
+  totalSeconds -= elapsedSeconds;
+
+  if (totalSeconds <= 0) {
+    minutes = 0;
+    seconds = 0;
+    handleTimerFinished();
+    return true; // session finished
+  }
+
+  minutes = Math.floor(totalSeconds / 60);
+  seconds = totalSeconds % 60;
+  return false; // session still active
+}
+
+// initialization function for runtime
+function init() {
+  const runtime = loadRuntime();
+
+  // no saved session - fresh start
+  if (!runtime) {
+    currentState = STATES.IDLE;
+    minutes = SETTINGS.study;
+    seconds = 0;
+    pomoCount = 0;
+    setState(STATES.IDLE);
+    return;
+  }
+
+  // validation
+  if (!isValidRuntime(runtime)) {
+    clearRuntime();
+    currentState = STATES.IDLE;
+    minutes = SETTINGS.study;
+    seconds = 0;
+    pomoCount = 0;
+    setState(STATES.IDLE);
+    return;
+  }
+
+  currentState = runtime.state;
+  minutes = runtime.minutes;
+  seconds = runtime.seconds;
+  pomoCount = runtime.pomoCount;
+  isRunning = runtime.isRunning;
+  longBreak = runtime.longBreak;
+
+  // compare against current Flask SETTINGS to refresh localstorage if SETTINGS were changed
+  let oldDuration = null;
+  let newDuration = null;
+
+  if (!runtime.settings) {
+    clearRuntime();
+    currentState = STATES.IDLE;
+    minutes = SETTINGS.study;
+    seconds = 0;
+    pomoCount = 0;
+    setState(STATES.IDLE);
+    return;
+  }
+
+  if (currentState === STATES.STUDY) {
+    oldDuration = runtime.settings.study;
+    newDuration = SETTINGS.study;
+  }
+
+  else if (currentState === STATES.BREAK) {
+    // long break
+    if (longBreak === true) {
+      oldDuration = runtime.settings.long_break;
+      newDuration = SETTINGS.long_break;
+    }
+
+    // short break
+    else {
+      oldDuration = runtime.settings.short_break;
+      newDuration = SETTINGS.short_break;
+    }
+  }
+
+  // adjust remaining time by difference
+  if (oldDuration !== null && oldDuration !== newDuration) {
+    const diffMinutes = newDuration - oldDuration;
+    let totalSeconds = minutes * 60 + seconds + diffMinutes * 60;
+
+    // clamp to at least 1 second so it doesn't finish instantly
+    if (totalSeconds < 1) {
+      totalSeconds = 1;
+    }
+
+    minutes = Math.floor(totalSeconds / 60);
+    seconds = totalSeconds % 60;
+  }
+
+  updatePetAnimation(currentState);
+
+  // if it was running -> calculate elapsed time
+  if (isRunning) {
+    const elapsed = Math.floor((Date.now() - runtime.savedAt) / 1000);
+    const finished = applyElapsedTime(elapsed);
+    
+    // only restart interval if session did NOT already finish
+    if (!finished && currentState === runtime.state) {
+      startInterval();
+    }
+  }
+
+  else if (currentState === STATES.STUDY || currentState === STATES.BREAK) {
+    StartButton.textContent = "Resume";
+    pet.classList.add("paused");
+  }
+
+  updateDisplay();
+}
 
 // start or stop timer without changing state or clicking buttons
 function startInterval() {
@@ -46,12 +261,14 @@ function startInterval() {
   timer = setInterval(updateTimer, 1000);
   pet.classList.remove("paused");
   StartButton.textContent = "Pause";
+  saveRuntime();
 }
 
 function stopInterval() {
   clearInterval(timer);
   timer = null;
   isRunning = false;
+  saveRuntime();
 }
 
 function setState(newState) {
@@ -89,9 +306,11 @@ function setState(newState) {
     // Check session count
     if (pomoCount === SETTINGS.pomocount) {
       minutes = SETTINGS.long_break;
+      longBreak = true;
       pomoCount = 0;
     } else {
       minutes = SETTINGS.short_break;
+      longBreak = false;
     }
     seconds = 0;
 
@@ -111,7 +330,8 @@ function setState(newState) {
 
   // update Timer display
   updateDisplay();
-  // TODO: update runtime state to state = x
+
+  saveRuntime();
 }
 
 function updatePetAnimation(state) {
@@ -129,7 +349,6 @@ function startTimer() {
   // if Pomodoro Timer not yet running
   if (!isRunning) {
     startInterval();
-    // TODO: update runtime state to running = y
   }
 
   // if Pomodoro Timer running -> Pause
@@ -137,7 +356,6 @@ function startTimer() {
     stopInterval();
     StartButton.textContent = "Resume";
     pet.classList.add("paused");
-    // TODO: update runtime state to running = n
   }
 }
 
@@ -146,7 +364,6 @@ function stopTimer() {
   // Pressed when finished -> set to idle
   if (currentState === STATES.FINISHED) {
     setState(STATES.IDLE);
-    // TODO: clear runtime state
   }
 
   // Pressed when studying -> set to finished
@@ -193,7 +410,6 @@ function updateTimer() {
   }
   // Update Countdown in HTML page
   updateDisplay();
-  // TODO: update stored runtime state every second or state change to seconds = x
 }
 
 // seperate Timer finished function
@@ -225,17 +441,7 @@ function updateDisplay() {
   Countdown.textContent = formatTime(minutes, seconds);
 }
 
-// TODO: INIT FUNCTION:
-// set variables
-// Check runtime state in localStorage (try - else with setState below)
-  // if yes:
-    // validate (valid state? time >= 0 and <?= ???? pomCount >= 0 and <= ?????, isRunning = bool)
-      // reset if invalid
-    //  restore timer state:
-      // set currentState -> update pet, remaining seconds = vars -> updateTimer set pomoCount if paused/running: change Button and Pet
-  // else, intitialize fresh session
-
-setState(STATES.IDLE);
+init();
 
 // clear timer on page unload
-window.addEventListener("beforeunload", stopInterval); // TODO: before stopInterval, persist final timer state and savedAt for timestamp and elapsed-time logic
+window.addEventListener("beforeunload", saveRuntime);
