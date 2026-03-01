@@ -8,7 +8,7 @@ let timer = null;
 let isRunning = false;
 let minutes = SETTINGS.study; // TODO: change to state from runtime
 let seconds = 0; // TODO: change to state from runtime
-let pomoCount = 0; // TO DO change to state from runtime (only declare vars here and move setting values to bottom)
+let pomoCount = 0; // TODO change to state from runtime (only declare vars here and move setting values to bottom)
 const audio = new Audio("static/sounds/schoolbell.mp3");
 
 // grab DOM elements
@@ -193,7 +193,7 @@ function updateTimer() {
   }
   // Update Countdown in HTML page
   updateDisplay();
-  // TODO: update stored runtime state every 10 seconds to seconds = x
+  // TODO: update stored runtime state every second or state change to seconds = x
 }
 
 // seperate Timer finished function
