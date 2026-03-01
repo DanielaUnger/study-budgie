@@ -14,11 +14,12 @@ const audio = new Audio("static/sounds/schoolbell.mp3");
 // grab DOM elements
 const StartButton = document.querySelector("#start_button");
 const StopButton = document.querySelector("#stop_button");
+const SkipButton = document.querySelector("#skip_button");
 const Countdown = document.getElementById("timer");
 const pet = document.querySelector(".pet");
 
 // guard against missing DOM elements
-if (!StartButton || !StopButton || !Countdown || !pet) {
+if (!StartButton || !StopButton || !SkipButton || !Countdown || !pet) {
   console.error("Required DOM elements not found");
   throw new Error("Required DOM elements not found");
 }
@@ -26,6 +27,7 @@ if (!StartButton || !StopButton || !Countdown || !pet) {
 // add EventListeners for buttons -> call Start and Stop functions
 StartButton.addEventListener("click", startTimer);
 StopButton.addEventListener("click", stopTimer);
+SkipButton.addEventListener("click", skipTimer);
 
 // State variables & state transition function
 const STATES = {
@@ -150,6 +152,24 @@ function stopTimer() {
   // Pressed when studying -> set to finished
   else if (currentState === STATES.STUDY || currentState === STATES.BREAK) {
     setState(STATES.FINISHED);
+  }
+}
+
+// Skip button clicked
+function skipTimer() {
+  // pressed during Study -> skip to next Break
+  if (currentState === STATES.STUDY) {
+    setState(STATES.BREAK);
+  }
+
+  // pressed during Break -> skip to next Study session
+  else if (currentState === STATES.BREAK) {
+    setState(STATES.STUDY);
+  }
+
+  // pressed during Idle or Finished -> do nothing
+  else {
+    return;
   }
 }
 

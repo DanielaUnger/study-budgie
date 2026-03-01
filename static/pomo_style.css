@@ -16,7 +16,7 @@ body {
   display: flex;
   align-items: flex-start;
   font-family: "Roboto", sans-serif;
-  color: #a67c52;
+  color: #9D744B;
   font-size: 18px;
 }
 
@@ -73,7 +73,7 @@ body {
 }
 
 .timer {
-  background-color: #a67c52;
+  background-color: #9D744B;
   font-family: "Roboto Mono", monospace;
   font-size: 64px;
   font-weight: bold;
@@ -103,8 +103,7 @@ body {
 .buttons {
   display: flex;
   justify-content: space-between;
-  width: auto;
-  gap: 60px;
+  width: 260px;
 }
 
 button {
@@ -113,25 +112,46 @@ button {
   border-radius: 15px;
   padding: 15px;
   width: auto;
+  height: 60px;
   font-family: "Roboto", sans-serif;
   font-size: 20px;
   font-weight: bold;
-  color: #a67c52;
+  color: #9D744B;
   text-align: center;
   letter-spacing: 1px;
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-shadow: 0 5px rgba(157, 116, 75, 0.5);
+}
+
+.square {
+  width: 60px;
+  height: 60px;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Noto Sans";
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+#stop_button {
+  font-size: 28px;
+}
+
+#skip_button {
+  font-size: 28px;
+}
+
+#start_button {
+  width: 120px;
 }
 
 button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(2px);
 }
 
 @keyframes two-frame {
