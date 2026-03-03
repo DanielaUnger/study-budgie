@@ -415,8 +415,10 @@ function updateTimer() {
 // seperate Timer finished function
 function handleTimerFinished() {
   stopInterval();
-  // play alarm sound
-  audio.play().catch(() => {});
+  // play alarm sound if setting on
+  if (SETTINGS.alarmsound === true) {
+    audio.play().catch(() => {});
+  }
 
   // If Study countdown up (instead of break countdown)
   if (currentState === STATES.STUDY) {

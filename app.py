@@ -14,6 +14,7 @@ DEFAULTS = {
     "pomocount": 4,
     "autobreak": False,
     "autostudy": False,
+    "alarmsound": True,
 }
 
 
@@ -28,6 +29,7 @@ def start():
         pomocount = request.form.get("pomocount", "").strip()
         autobreak = request.form.get("autobreak") == "on"
         autostudy = request.form.get("autostudy") == "on"
+        alarmsound = request.form.get("alarmsound") == "on"
 
         # converting strings to int
         try:
@@ -60,6 +62,7 @@ def start():
             "pomocount": pomocount,
             "autobreak": autobreak,
             "autostudy": autostudy,
+            "alarmsound": alarmsound,
         }
 
         return redirect("/index")
