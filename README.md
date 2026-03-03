@@ -51,10 +51,10 @@ If a user changes their Pomodoro settings while a session is in progress, the ti
 
 The timer itself includes:
 
-* A Start / Pause / Resume button to control the countdown
+* A Start / Pause button to control the countdown
 * A Stop button to end the current Pomodoro cycle and move to the finished state
 * A Skip button to skip to Break/Study state
-* An audible notification when a session or break ends
+* An audible notification when a session or break ends (optional)
 
 If automatic study or breaks are disabled, the user must manually start the timer after each state change, giving full control over pacing.
 
