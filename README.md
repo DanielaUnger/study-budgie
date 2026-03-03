@@ -1,6 +1,6 @@
 # Study Budgie
 
-![Animation of Pomodoro countdown in action featuring a stylized illustration of a budgie](/static/img/budgie_450.gif)
+![Animation of Pomodoro countdown in action featuring a stylized illustration of a budgie](/static/img/studybudgie.gif)
 
 ## Description:
 
