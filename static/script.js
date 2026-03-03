@@ -436,9 +436,10 @@ function formatTime(minutes, seconds) {
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
-// Update Countdown display
+// Update Countdown display & browser tab
 function updateDisplay() {
   Countdown.textContent = formatTime(minutes, seconds);
+  document.title = `Study Budgie ${formatTime(minutes, seconds)}`;
 }
 
 init();
