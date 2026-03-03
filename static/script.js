@@ -247,7 +247,7 @@ function init() {
   }
 
   else if (currentState === STATES.STUDY || currentState === STATES.BREAK) {
-    StartButton.textContent = "Resume";
+    StartButton.textContent = "Start";
     pet.classList.add("paused");
   }
 
@@ -299,6 +299,7 @@ function setState(newState) {
   if (currentState === STATES.STUDY) {
     minutes = SETTINGS.study;
     seconds = 0;
+    StartButton.textContent = "Start";
   }
 
   // Break state -> long break after 4 sessions, else short break
@@ -354,7 +355,7 @@ function startTimer() {
   // if Pomodoro Timer running -> Pause
   else {
     stopInterval();
-    StartButton.textContent = "Resume";
+    StartButton.textContent = "Start";
     pet.classList.add("paused");
   }
 }
