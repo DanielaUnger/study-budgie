@@ -299,7 +299,13 @@ function setState(newState) {
   if (currentState === STATES.STUDY) {
     minutes = SETTINGS.study;
     seconds = 0;
-    StartButton.textContent = "Start";
+    
+    // auto-start study if setting is on
+    if (SETTINGS.autostudy === true) {
+      startInterval();
+    } else {
+      StartButton.textContent = "Start";
+    }
   }
 
   // Break state -> long break after 4 sessions, else short break
