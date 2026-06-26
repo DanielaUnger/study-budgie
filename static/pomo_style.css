@@ -43,7 +43,7 @@ body {
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .nav {
@@ -77,6 +77,7 @@ body {
   text-overflow: ellipsis;
   flex-shrink: 1;
   min-width: 0;
+  flex: 1 1 auto;
 }
 
 .timer {
