@@ -243,11 +243,11 @@ td {
   }
 
   .header {
-    padding: 12px 16px;
+    padding: 15px 20px;
   }
 
   .title {
-    font-size: 36px;
+    font-size: 42px;
   }
 
   .nav {
@@ -260,31 +260,37 @@ td {
   }
 
   .timer {
-    font-size: 52px;
-    width: 220px;
-    height: 92px;
-  }
-
-  /* Pet Größe */
-  .pet {
+    font-size: 56px;
     width: 240px;
-    height: 240px;
-    background-size: 1920px 240px;
-    margin-bottom: -36px;
+    height: 100px;
   }
 
-  /* Pet Sprite-Positionen (skaliert mit Faktor 0.8) */
-  .pet.idle     { --frame-1:    0px; --frame-2:  -240px; }
-  .pet.study    { --frame-1: -480px; --frame-2:  -720px; }
-  .pet.break    { --frame-1: -960px; --frame-2: -1200px; }
-  .pet.finished { --frame-1: -1440px; --frame-2: -1680px; }
+  .pet {
+    width: 270px;
+    height: 270px;
+    background-size: 2160px 270px;
+    margin-bottom: -40px;
+  }
+
+  /* Sprite-Positionen mit Faktor 0.9 */
+  .pet.idle     { --frame-1:    0px; --frame-2:  -270px; }
+  .pet.study    { --frame-1: -540px; --frame-2:  -810px; }
+  .pet.break    { --frame-1: -1080px; --frame-2: -1350px; }
+  .pet.finished { --frame-1: -1620px; --frame-2: -1890px; }
 
   .buttons {
-    width: 220px;
+    width: 240px;
+    gap: 10px;
+    justify-content: center;
   }
 
   #start_button {
-    width: 100px;
-    font-size: 17px;
+    width: 110px;
+    font-size: 18px;
+  }
+
+  .square {
+    width: 60px;
+    height: 60px;
   }
 }
