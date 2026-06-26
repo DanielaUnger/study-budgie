@@ -30,23 +30,21 @@ body {
 .header {
   width: 100%;
   background-color: #65c8d0;
-  padding: 25px;
+  padding: 15px 20px;
   display: flex;
   align-items: center;
-}
-
-.header::before {
-  content: "";
-  flex: 1;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .nav {
-  flex: 1;
+  flex: 0 0 auto;
   display: flex;
   justify-content: flex-end;
   font-family: "Roboto", sans-serif;
   font-weight: bold;
   font-size: 22px;
+  margin-left: auto;
 }
 
 .nav a {
@@ -65,6 +63,10 @@ body {
   color: white;
   font-weight: normal;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 1;
 }
 
 .main {
@@ -232,4 +234,57 @@ td {
 .study_form input[type="checkbox"] {
   width: 30px;
   height: 30px;
+}
+
+/* Mobile Layout */
+@media (max-width: 480px) {
+  body {
+    font-size: 16px;
+  }
+
+  .header {
+    padding: 12px 16px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .nav {
+    font-size: 18px;
+  }
+
+  .main {
+    gap: 20px;
+    padding: 20px 16px;
+  }
+
+  .timer {
+    font-size: 52px;
+    width: 220px;
+    height: 92px;
+  }
+
+  /* Pet Größe */
+  .pet {
+    width: 240px;
+    height: 240px;
+    background-size: 1920px 240px;
+    margin-bottom: -36px;
+  }
+
+  /* Pet Sprite-Positionen (skaliert mit Faktor 0.8) */
+  .pet.idle     { --frame-1:    0px; --frame-2:  -240px; }
+  .pet.study    { --frame-1: -480px; --frame-2:  -720px; }
+  .pet.break    { --frame-1: -960px; --frame-2: -1200px; }
+  .pet.finished { --frame-1: -1440px; --frame-2: -1680px; }
+
+  .buttons {
+    width: 220px;
+  }
+
+  #start_button {
+    width: 100px;
+    font-size: 17px;
+  }
 }
