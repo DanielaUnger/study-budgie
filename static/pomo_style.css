@@ -262,7 +262,14 @@ td {
     white-space: nowrap;
   }
 
+  .container {
+    min-height: 100vh;
+    flex: 1;
+  }
+
   .main {
+    flex: 1;
+    justify-content: center;
     gap: 20px;
     padding: 20px 16px;
   }
