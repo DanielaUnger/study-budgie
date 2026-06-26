@@ -263,7 +263,7 @@ td {
   }
 
   .container {
-    min-height: 100vh;
+    min-height: 100dvh;
     flex: 1;
   }
 
