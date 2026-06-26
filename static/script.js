@@ -247,8 +247,18 @@ function init() {
   }
 
   else if (currentState === STATES.STUDY || currentState === STATES.BREAK) {
-    StartButton.textContent = "Start";
-    pet.classList.add("paused");
+    // auto-start study if setting is on
+    if (currentState === STATES.STUDY && SETTINGS.autostudy === true) {
+      startInterval();
+    }
+    // auto-start break if setting is on
+    else if (currentState === STATES.BREAK && SETTINGS.autobreak === true) {
+      startInterval();
+    }
+    else {
+      StartButton.textContent = "Start";
+      pet.classList.add("paused");
+    }
   }
 
   updateDisplay();
@@ -299,12 +309,11 @@ function setState(newState) {
   if (currentState === STATES.STUDY) {
     minutes = SETTINGS.study;
     seconds = 0;
+    StartButton.textContent = "Start";
     
     // auto-start study if setting is on
     if (SETTINGS.autostudy === true) {
       startInterval();
-    } else {
-      StartButton.textContent = "Start";
     }
   }
 
