@@ -14,7 +14,8 @@ body {
   background-color: #c1e9ec;
   justify-content: center;
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: stretch;
   font-family: "Roboto", sans-serif;
   color: #9D744B;
   font-size: 18px;
@@ -22,9 +23,21 @@ body {
 
 .container {
   width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: 30px;
 }
 
 .header {
@@ -70,14 +83,6 @@ body {
   min-width: 0;
 }
 
-.main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-  padding: 30px;
-}
-
 .timer {
   background-color: #9D744B;
   font-family: "Roboto Mono", monospace;
@@ -101,7 +106,7 @@ body {
   background-image: url("img/pomo_spritesheet.svg");
   background-repeat: no-repeat;
   background-size: 2400px 300px;
-  margin: auto auto -45px auto;
+  margin-bottom: -45px;
   position: relative;
   z-index: 2;
 }
@@ -259,7 +264,7 @@ td {
 
   .main {
     gap: 20px;
-    padding: 30px 16px 20px 16px;
+    padding: 20px 16px;
   }
 
   .timer {
