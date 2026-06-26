@@ -4,18 +4,15 @@
   box-sizing: border-box;
 }
 
-html,
-body {
+html {
   height: 100%;
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100%;
   background-color: #c1e9ec;
-  justify-content: center;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   font-family: "Roboto", sans-serif;
   color: #9D744B;
   font-size: 18px;
@@ -23,7 +20,6 @@ body {
 
 .container {
   width: 100%;
-  min-height: 100vh;
   display: flex;
   flex: 1;
   flex-direction: column;
