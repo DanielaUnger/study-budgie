@@ -295,13 +295,7 @@ function setState(newState) {
 
     // auto-start study if setting is on
     if (SETTINGS.autostudy === true) {
-      currentState = STATES.STUDY;
-      updatePetAnimation(currentState);
-      minutes = SETTINGS.study;
-      seconds = 0;
-      updateDisplay();
-      startInterval();
-      return;
+      setState(STATES.STUDY);
     }
   }
 
