@@ -8,7 +8,7 @@ Study Budgie is a Pomodoro timer web application featuring a cute animated budgi
 
 ## Live Demo
 
-`https://study-budgie.onrender.com`
+[Link](https://study-budgie.onrender.com)
 
 ## Features
 
