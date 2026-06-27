@@ -416,26 +416,6 @@ function updateTimer() {
   }
   updateDisplay();
 }
-function updateTimer() {
-  // Check if timer is finished
-  if (minutes === 0 && seconds === 0) {
-    handleTimerFinished();
-    return;
-  }
-
-  // if Countdown still going -> loop
-  // Subtract seconds
-  if (seconds > 0) {
-    seconds--;
-  }
-  // Subtract minute
-  else {
-    seconds = 59;
-    minutes--;
-  }
-  // Update Countdown in HTML page
-  updateDisplay();
-}
 
 // seperate Timer finished function
 function handleTimerFinished() {
