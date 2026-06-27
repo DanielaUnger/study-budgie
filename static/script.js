@@ -9,7 +9,7 @@ let minutes;
 let seconds;
 let pomoCount;
 let currentState;
-const audio = new Audio("static/sounds/schoolbell.mp3");
+let audio = null;
 
 // grab DOM elements
 const StartButton = document.querySelector("#start_button");
@@ -422,6 +422,8 @@ function handleTimerFinished() {
   stopInterval();
   // play alarm sound if setting on
   if (SETTINGS.alarmsound === true) {
+    // initialize audio
+    if (!audio) audio = new Audio("static/sounds/schoolbell.mp3");
     audio.play().catch(() => {});
   }
 
