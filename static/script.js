@@ -161,8 +161,6 @@ function init() {
   // no saved session - fresh start
   if (!runtime) {
     currentState = STATES.IDLE;
-    minutes = SETTINGS.study;
-    seconds = 0;
     pomoCount = 0;
     setState(STATES.IDLE);
     return;
@@ -172,8 +170,6 @@ function init() {
   if (!isValidRuntime(runtime)) {
     clearRuntime();
     currentState = STATES.IDLE;
-    minutes = SETTINGS.study;
-    seconds = 0;
     pomoCount = 0;
     setState(STATES.IDLE);
     return;
@@ -193,8 +189,6 @@ function init() {
   if (!runtime.settings) {
     clearRuntime();
     currentState = STATES.IDLE;
-    minutes = SETTINGS.study;
-    seconds = 0;
     pomoCount = 0;
     setState(STATES.IDLE);
     return;
