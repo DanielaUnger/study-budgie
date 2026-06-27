@@ -345,6 +345,10 @@ function startTimer() {
   if (currentState === STATES.IDLE || currentState === STATES.FINISHED) {
     pomoCount = 0;
     setState(STATES.STUDY);
+    if (!isRunning) {
+      startInterval();
+    }
+    return;
   }
 
   // if Pomodoro Timer not yet running
