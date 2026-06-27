@@ -273,7 +273,9 @@ function stopInterval() {
   timer = null;
   isRunning = false;
   saveRuntime();
-  updateDisplay();
+  if (Number.isFinite(minutes) && Number.isFinite(seconds)) {
+    updateDisplay();
+  }
 }
 
 function setState(newState) {
@@ -294,7 +296,7 @@ function setState(newState) {
   }
 
   // Study state
-  if (currentState === STATES.STUDY) {
+  else if (currentState === STATES.STUDY) {
     minutes = SETTINGS.study;
     seconds = 0;
 
@@ -305,7 +307,7 @@ function setState(newState) {
   }
 
   // Break state -> long break after 4 sessions, else short break
-  if (currentState === STATES.BREAK) {
+  else if (currentState === STATES.BREAK) {
     // Check session count
     if (pomoCount === SETTINGS.pomocount) {
       minutes = SETTINGS.long_break;
@@ -320,12 +322,11 @@ function setState(newState) {
     // auto-start break if setting is on
     if (SETTINGS.autobreak === true) {
       startInterval();
-    } else {
     }
   }
 
-  // Finished state
-  if (currentState === STATES.FINISHED) {
+  else {
+    // Finished state: no extra steps needed, fall through to below
   }
 
   // update Timer display
