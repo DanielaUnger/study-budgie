@@ -203,9 +203,7 @@ function init() {
   if (currentState === STATES.STUDY) {
     oldDuration = runtime.settings.study;
     newDuration = SETTINGS.study;
-  }
-
-  else if (currentState === STATES.BREAK) {
+  } else if (currentState === STATES.BREAK) {
     // long break
     if (longBreak === true) {
       oldDuration = runtime.settings.long_break;
@@ -239,14 +237,12 @@ function init() {
   if (isRunning) {
     const elapsed = Math.floor((Date.now() - runtime.savedAt) / 1000);
     const finished = applyElapsedTime(elapsed);
-    
+
     // only restart interval if session did NOT already finish
     if (!finished && currentState === runtime.state) {
       startInterval();
     }
-  }
-
-  else if (currentState === STATES.STUDY || currentState === STATES.BREAK) {
+  } else if (currentState === STATES.STUDY || currentState === STATES.BREAK) {
     // auto-start study if setting is on
     if (currentState === STATES.STUDY && SETTINGS.autostudy === true) {
       startInterval();
@@ -254,9 +250,7 @@ function init() {
     // auto-start break if setting is on
     else if (currentState === STATES.BREAK && SETTINGS.autobreak === true) {
       startInterval();
-    }
-    else {
-      StartButton.textContent = "Start";
+    } else {
       pet.classList.add("paused");
     }
   }
@@ -270,8 +264,8 @@ function startInterval() {
   isRunning = true;
   timer = setInterval(updateTimer, 1000);
   pet.classList.remove("paused");
-  StartButton.textContent = "Pause";
   saveRuntime();
+  updateDisplay();
 }
 
 function stopInterval() {
@@ -279,6 +273,7 @@ function stopInterval() {
   timer = null;
   isRunning = false;
   saveRuntime();
+  updateDisplay();
 }
 
 function setState(newState) {
@@ -291,7 +286,6 @@ function setState(newState) {
   if (currentState === STATES.IDLE) {
     minutes = SETTINGS.study;
     seconds = 0;
-    StartButton.textContent = "Start";
 
     // auto-start study if setting is on
     if (SETTINGS.autostudy === true) {
@@ -303,8 +297,7 @@ function setState(newState) {
   if (currentState === STATES.STUDY) {
     minutes = SETTINGS.study;
     seconds = 0;
-    StartButton.textContent = "Start";
-    
+
     // auto-start study if setting is on
     if (SETTINGS.autostudy === true) {
       startInterval();
@@ -328,13 +321,11 @@ function setState(newState) {
     if (SETTINGS.autobreak === true) {
       startInterval();
     } else {
-      StartButton.textContent = "Start";
     }
   }
 
   // Finished state
   if (currentState === STATES.FINISHED) {
-    StartButton.textContent = "Start";
   }
 
   // update Timer display
@@ -364,7 +355,6 @@ function startTimer() {
   // if Pomodoro Timer running -> Pause
   else {
     stopInterval();
-    StartButton.textContent = "Start";
     pet.classList.add("paused");
   }
 }
@@ -405,11 +395,11 @@ function updateTimer() {
   // Check if timer is still going
   if (seconds > 0) {
     seconds--;
-  // Check if minute has lapsed
+    // Check if minute has lapsed
   } else if (minutes > 0) {
     seconds = 59;
     minutes--;
-  // Otherwise: timer is finished
+    // Otherwise: timer is finished
   } else {
     handleTimerFinished();
     return;
@@ -449,6 +439,12 @@ function formatTime(minutes, seconds) {
 function updateDisplay() {
   Countdown.textContent = formatTime(minutes, seconds);
   document.title = `Study Budgie ${formatTime(minutes, seconds)}`;
+  updateStartButton();
+}
+
+// Update Start/Pause button display
+function updateStartButton() {
+  StartButton.textContent = isRunning ? "Pause" : "Start";
 }
 
 init();
