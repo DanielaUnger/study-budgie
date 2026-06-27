@@ -335,7 +335,6 @@ function setState(newState) {
   // Finished state
   if (currentState === STATES.FINISHED) {
     StartButton.textContent = "Start";
-    pomoCount = 0;
   }
 
   // update Timer display
@@ -351,8 +350,9 @@ function updatePetAnimation(state) {
 
 // Start or Pause button clicked
 function startTimer() {
-  // change to Study State
+  // reset Pomo Count and change to Study State
   if (currentState === STATES.IDLE || currentState === STATES.FINISHED) {
+    pomoCount = 0;
     setState(STATES.STUDY);
   }
 
