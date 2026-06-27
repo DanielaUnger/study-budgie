@@ -408,6 +408,21 @@ function skipTimer() {
 
 // Update timer function -> updates timer every second
 function updateTimer() {
+  // Check if timer is still going
+  if (seconds > 0) {
+    seconds--;
+  // Check if minute has lapsed
+  } else if (minutes > 0) {
+    seconds = 59;
+    minutes--;
+  // Otherwise: timer is finished
+  } else {
+    handleTimerFinished();
+    return;
+  }
+  updateDisplay();
+}
+function updateTimer() {
   // Check if timer is finished
   if (minutes === 0 && seconds === 0) {
     handleTimerFinished();
