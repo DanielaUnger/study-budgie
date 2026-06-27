@@ -6,6 +6,10 @@
 
 Study Budgie is a Pomodoro timer web application featuring a cute animated budgie mascot.
 
+## Live Demo
+
+`https://study-budgie.onrender.com`
+
 ## Features
 
 - Customizable study sessions, short/long breaks, and interval counts
