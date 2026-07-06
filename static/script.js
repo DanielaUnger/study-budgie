@@ -182,6 +182,12 @@ function init() {
   isRunning = runtime.isRunning;
   longBreak = runtime.longBreak;
 
+  // IDLE previews study duration: always syncs to current settings
+  if (currentState === STATES.IDLE) {
+    minutes = SETTINGS.study;
+    seconds = 0;
+  }
+
   // compare against current Flask SETTINGS to refresh localstorage if SETTINGS were changed
   let oldDuration = null;
   let newDuration = null;
