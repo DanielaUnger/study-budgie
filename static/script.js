@@ -336,9 +336,12 @@ function updatePetAnimation(state) {
 
 // Start or Pause button clicked
 function startTimer() {
-  // reset Pomo Count and change to Study State
-  if (currentState === STATES.IDLE || currentState === STATES.FINISHED) {
-    pomoCount = 0;
+  if (currentState === STATES.FINISHED || currentState === STATES.IDLE) {
+    // hard reset Pomo Count after explicit Stop
+    if (currentState === STATES.FINISHED) {
+      pomoCount = 0;
+    }
+    // resume ongoing cycle
     setState(STATES.STUDY);
     if (!isRunning) {
       startInterval();
