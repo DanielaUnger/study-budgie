@@ -462,7 +462,7 @@ function handleTimerFinished() {
     setState(STATES.BREAK);
   }
   // if Break countdown up, change to Study if autostudy is on
-  else if (SETTINGS.autostudy === false) {
+  else if (SETTINGS.autostudy === true) {
     setState(STATES.STUDY);
   }
   // if Break countdown up, change to Idle if autostudy is off
