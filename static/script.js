@@ -374,6 +374,7 @@ function stopTimer() {
 function skipTimer() {
   // pressed during Study -> skip to next Break
   if (currentState === STATES.STUDY) {
+    pomoCount++;
     setState(STATES.BREAK);
   }
 
