@@ -351,15 +351,19 @@ function updatePetAnimation(state) {
 function unlockAudio() {
   if (audio) return; // already unlocked
   audio = new Audio("static/sounds/schoolbell.mp3");
-  // playback attempt to check audio permission
+  // muted playback attempt to check audio permission
+  audio.muted = true;
   audio.play()
-    // if play succeeds
+    // if play succeeds: play audio for a millisecond then pause and rewind
     .then(() => {
       audio.pause();
       audio.currentTime = 0;
+      audio.muted = false; // restore normal volume
     })
     // if play fails
-    .catch(() => {});
+    .catch(() => {
+      audio.muted = false;
+    });
 }
 
 // Start or Pause button clicked
