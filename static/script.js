@@ -365,6 +365,7 @@ function startTimer() {
 function stopTimer() {
   // Pressed when finished -> set to idle
   if (currentState === STATES.FINISHED) {
+    pomoCount = 0;
     setState(STATES.IDLE);
   }
 
