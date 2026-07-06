@@ -424,13 +424,14 @@ function updateTimer() {
   updateDisplay();
 }
 
-// seperate Timer finished function
+// Timer finished function
 function handleTimerFinished() {
   stopInterval();
   // play alarm sound if setting on
   if (SETTINGS.alarmsound === true) {
     // initialize audio
     if (!audio) audio = new Audio("static/sounds/schoolbell.mp3");
+    audio.currentTime = 0;
     audio.play().catch(() => {});
   }
 
