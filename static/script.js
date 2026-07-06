@@ -347,8 +347,25 @@ function updatePetAnimation(state) {
   pet.classList.add(state);
 }
 
+// unlock Audio to make sure it plays on mobile
+function unlockAudio() {
+  if (audio) return; // already unlocked
+  audio = new Audio("static/sounds/schoolbell.mp3");
+  // playback attempt to check audio permission
+  audio.play()
+    // if play succeeds
+    .then(() => {
+      audio.pause();
+      audio.currentTime = 0;
+    })
+    // if play fails
+    .catch(() => {});
+}
+
 // Start or Pause button clicked
 function startTimer() {
+  // unlock audio to give browser permission to play audio
+  unlockAudio();
   if (currentState === STATES.FINISHED || currentState === STATES.IDLE) {
     // hard reset Pomo Count after explicit Stop
     if (currentState === STATES.FINISHED) {
@@ -428,9 +445,7 @@ function updateTimer() {
 function handleTimerFinished() {
   stopInterval();
   // play alarm sound if setting on
-  if (SETTINGS.alarmsound === true) {
-    // initialize audio
-    if (!audio) audio = new Audio("static/sounds/schoolbell.mp3");
+  if (SETTINGS.alarmsound === true && audio) {
     audio.currentTime = 0;
     audio.play().catch(() => {});
   }
