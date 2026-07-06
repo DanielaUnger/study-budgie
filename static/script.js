@@ -154,6 +154,9 @@ function applyElapsedTime(elapsedSeconds) {
   return false; // session still active
 }
 
+// how long saved session is allowed to sit before it's considered stale
+const SESSION_STALE_MS = 30 * 60 * 1000 // 30 minutes
+
 // initialization function for runtime
 function init() {
   const runtime = loadRuntime();
@@ -168,6 +171,15 @@ function init() {
 
   // validation
   if (!isValidRuntime(runtime)) {
+    clearRuntime();
+    currentState = STATES.IDLE;
+    pomoCount = 0;
+    setState(STATES.IDLE);
+    return;
+  }
+
+  // stale session - too much time has passed, start fresh instead of resuming ression
+  if (Date.now() - runtime.savedAt > SESSION_STALE_MS) {
     clearRuntime();
     currentState = STATES.IDLE;
     pomoCount = 0;
