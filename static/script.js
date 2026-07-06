@@ -282,11 +282,6 @@ function setState(newState) {
   if (currentState === STATES.IDLE) {
     minutes = SETTINGS.study;
     seconds = 0;
-
-    // auto-start study if setting is on
-    if (SETTINGS.autostudy === true) {
-      setState(STATES.STUDY);
-    }
   }
 
   // Study state
